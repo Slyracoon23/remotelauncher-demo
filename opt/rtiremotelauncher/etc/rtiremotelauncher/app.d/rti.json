@@ -1,0 +1,55 @@
+/* RTI Remote Launcher Application Definition File
+ *
+ * Top-level can be either a single object definition or
+ * an array of object definitions.
+ *
+ * This config file contains all the RTI Professional Tools for a x64Linux host
+ *
+ * You can put comments using multi-line or single line (//) comment delimiters
+ *
+ * You can use any environment value in any value. Refer to environment variables
+ * using the shell-like expansion form: ${ENV_VARIABLE}. Braces are optional.
+ * In addition to the standard environment variables, Remote Launcher makes 
+ * available the following variables:
+ *   - RTIRL_HOSTNAME: the unique name of this instance of Remote Launcher
+ *   - RTIRL_ARCH    : the host architecture of Remote Launcher. E.g. 'x64Linux'
+ *
+ * Complete list of properties of an application object:
+ * - name: Unique name of the application (no spaces)
+ * - class: Full name of the application (optional, if not specified will copy from `name`)
+ * - version: App version (optional)
+ * - base: base directory where app and depdendencies are installed
+ * - main: main executable
+ * - arch: override the remote launcher architecture (optional)
+ * - user: user name to execute if remotelauncherd runs as root (optional)
+ * - pkg: array of dependency files
+ */
+[
+    {
+        "name": "ping",
+        "class": "RTI DDS Ping",
+        "description": "The rtiddsspy utility allows the user to monitor groups of publications available on any RTI Connext domain",
+        "version": "6.0.1",
+        "base": "/app",
+        "main": "bin/rtiddsping",
+        "pkg": [ 
+            "lib/libnddscpp.so",
+            "lib/libnddsc.so",
+            "lib/libnddscore.so"
+        ]
+    },
+    {
+        "name": "spy",
+        "class": "RTI DDS Spy",
+        "description": "The rtiddsping utility uses RTI Connext to send and receive preconfigured 'Ping' messages to other rtiddsping applications which can be running in the same or different computers",
+        "version": "6.0.1",
+        "base": "/app",
+        "main": "bin/rtiddsspy",
+        "pkg": [ 
+            "lib/libnddscpp.so",
+            "lib/libnddsc.so",
+            "lib/libnddscore.so"
+        ]
+    }
+]
+

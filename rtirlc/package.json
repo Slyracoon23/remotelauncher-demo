@@ -1,0 +1,31 @@
+{
+    "name": "rtiremotelauncher-client",
+    "version": "0.1.0-2",
+    "description": "A command-line client for RTI Remote Launcher.",
+    "keywords": [
+        "rti",
+        "Real-Time Innovations",
+        "Remote Launcher",
+        "API",
+        "Client"
+    ],
+    "homepage": "https://github.com/rticommunity/rtiremotelauncher",
+    "bugs": {
+        "url": "https://github.com/rticommunity/rtiremotelauncher/issues",
+        "email": "fabrizio@rti.com"
+    },
+    "license": "Apache-2.0",
+    "author": "Fabrizio Bertocci <fabrizio@rti.com>",
+    "main": "api.js",
+    "bin": {
+        "rtirlc": "./rtirlc.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rticommunity/rtiremotelauncher",
+        "directory": "src/rtirlc"
+    },
+    "dependencies": {
+        "axios": "^0.19.2"
+    }
+}

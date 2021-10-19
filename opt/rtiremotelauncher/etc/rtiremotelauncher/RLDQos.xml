@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.0.1/rti_dds_profiles.xsd" version="6.0.1">
+    <qos_library name="RemoteLauncherLib">
+      <!--This profile must contain the participant QoS profiles used by the application-->
+      <qos_profile name="RemoteLauncherDaemonProfile" base_name="BuiltinQosLib::Generic.StrictReliable">
+        <participant_qos>
+          <participant_name>
+            <name>RemoteLauncherDaemon</name>
+          </participant_name>
+        </participant_qos>
+      </qos_profile>
+      <!--This profile must contain the data reader and data writer QoS profiles used to read/write the RemoteLauncherInfo topic-->
+      <qos_profile name="RemoteLauncherInfoProfile" base_name="BuiltinQosLib::Generic.KeepLastReliable">
+        <datareader_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <liveliness>
+            <lease_duration>
+              <sec>5</sec>
+              <nanosec>DURATION_ZERO_NSEC</nanosec>
+            </lease_duration>
+          </liveliness>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <liveliness>
+            <lease_duration>
+              <sec>5</sec>
+              <nanosec>DURATION_ZERO_NSEC</nanosec>
+            </lease_duration>
+          </liveliness>
+        </datawriter_qos>
+      </qos_profile>
+      <!--This profile must contain the data reader and data writer QoS profiles used to read/write the ApplicationInfo topic-->
+      <qos_profile name="ApplicationInfoProfile" base_name="BuiltinQosLib::Generic.KeepLastReliable">
+        <datareader_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <liveliness>
+            <lease_duration>
+              <sec>5</sec>
+              <nanosec>DURATION_ZERO_NSEC</nanosec>
+            </lease_duration>
+          </liveliness>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <liveliness>
+            <lease_duration>
+              <sec>5</sec>
+              <nanosec>DURATION_ZERO_NSEC</nanosec>
+            </lease_duration>
+          </liveliness>
+        </datawriter_qos>
+      </qos_profile>
+      <!-- Base profile for the Service API -->
+      <qos_profile name="HDRPCBaseProfile">
+        <datareader_qos>
+          <!-- Strict reliable -->
+          <reliability>
+            <kind>RELIABLE_RELIABILITY_QOS</kind>
+            <max_blocking_time>
+              <sec>10</sec>
+              <nanosec>0</nanosec>
+            </max_blocking_time>
+          </reliability>
+          <!-- These are typical protocol parameters for a reliable
+                     DataReader -->
+          <protocol>
+            <rtps_reliable_reader>
+              <min_heartbeat_response_delay>
+                <sec>0</sec>
+                <nanosec>0</nanosec>
+              </min_heartbeat_response_delay>
+              <max_heartbeat_response_delay>
+                <sec>0</sec>
+                <nanosec>0</nanosec>
+              </max_heartbeat_response_delay>
+            </rtps_reliable_reader>
+          </protocol>
+        </datareader_qos>
+        <datawriter_qos>
+          <!-- Strict reliable -->
+          <reliability>
+            <kind>RELIABLE_RELIABILITY_QOS</kind>
+            <max_blocking_time>
+              <sec>10</sec>
+              <nanosec>0</nanosec>
+            </max_blocking_time>
+          </reliability>
+          <writer_resource_limits>
+            <!-- This setting enables efficient communication
+                         between a replier and an arbitrary number of requesters 
+                     -->
+            <max_remote_reader_filters>LENGTH_UNLIMITED</max_remote_reader_filters>
+          </writer_resource_limits>
+          <!-- These are typical protocol parameters for a reliable
+                     DataWriter -->
+          <protocol>
+            <rtps_reliable_writer>
+              <heartbeat_period>
+                <sec>0</sec>
+                <nanosec>100000000</nanosec>
+                <!--100ms -->
+              </heartbeat_period>
+              <fast_heartbeat_period>
+                <sec>0</sec>
+                <nanosec>10000000</nanosec>
+                <!--10ms -->
+              </fast_heartbeat_period>
+              <late_joiner_heartbeat_period>
+                <sec>0</sec>
+                <nanosec>10000000</nanosec>
+                <!--10ms -->
+              </late_joiner_heartbeat_period>
+              <max_heartbeat_retries>LENGTH_UNLIMITED</max_heartbeat_retries>
+              <heartbeats_per_max_samples>2</heartbeats_per_max_samples>
+              <min_nack_response_delay>
+                <sec>0</sec>
+                <nanosec>0</nanosec>
+              </min_nack_response_delay>
+              <max_nack_response_delay>
+                <sec>0</sec>
+                <nanosec>0</nanosec>
+              </max_nack_response_delay>
+              <min_send_window_size>32</min_send_window_size>
+              <max_send_window_size>32</max_send_window_size>
+            </rtps_reliable_writer>
+          </protocol>
+        </datawriter_qos>
+      </qos_profile>
+      <!-- Requester Profile -->
+      <qos_profile name="HDRPCRequestProfile" base_name="RemoteLauncherLib::HDRPCBaseProfile">
+        <datareader_qos>
+          <durability>
+            <kind>VOLATILE_DURABILITY_QOS</kind>
+          </durability>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <kind>VOLATILE_DURABILITY_QOS</kind>
+          </durability>
+        </datawriter_qos>
+      </qos_profile>
+      <!-- Replier Profile -->
+      <qos_profile name="HDRPCResponseProfile" base_name="RemoteLauncherLib::HDRPCBaseProfile">
+        <datareader_qos>
+          <durability>
+            <kind>VOLATILE_DURABILITY_QOS</kind>
+          </durability>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <kind>VOLATILE_DURABILITY_QOS</kind>
+          </durability>
+        </datawriter_qos>
+      </qos_profile>
+    </qos_library>
+
+</dds>
